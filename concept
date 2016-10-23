@@ -1,0 +1,41 @@
+Garden Control Project
+
+Overview:
+An opensource toolkit, that controlls gardening applications, consisting of different modules, which are connected vi WiFi, an can be configured via WebGUI.
+
+The GUI (see mockGUI.png):
+The GUI should be a drag and drop interface, which allows the user to configure the modules to his needs.
+If for example, a valve should be switched at a certain air humidity level, the user can connect this two modules.
+So the user draws a diagram of interaction between the modules.
+
+Architecture:
+There is an interface between the GUI and the modules, so that an other GUI can use the actions as well. The interface runs on a computer, for example a Raspberry Pi.
+Like this it can serve as a perfect framework for more complex GUIs which allow less user interaction, and therefor require less knowledge
+(eg. air temperature and humidity management is automated according to profile).
+Modules have different action fields, while sensor and timers have output fields. An action field can serve as an output field as well, to initiate actions depending on
+the state of another module. The possibility to create a tool, which is able to generate and read profiles for specific plants, a specific setup needs to be choosen,
+so that repeatability is given. This means, that modules have to be set up the same way every time, and should be done in a second step,
+after completion of the framework.
+
+The Modules:
+0.Scheduler Module
+	-Specific Time: every time this time is reached, action is started
+	-Repeat Schduler: can be set to an interval to repeat action
+	-Light Scheduler: easy drag and drop of bars: two outputs for actions
+1.Switch: switches a relay
+2.Ebb Flood Controller: controlls ebb-flood table
+3.Flip Flop Switch: to use one ballast, for two bulbs
+4.Valve Module: solenoid valve that is switched according to schedule or events
+
+The Sensormodules:
+1.Temperaturesensor
+2.Air Humidity Sensor
+3.ph Sensor
+4.ec Sensor
+5.Water Sensor
+6.Level Sensor
+
+List of Connections/Actions for Modules:
+1.IF: for sensors an IF condiction can be configured
+2.Simple connection: connecting a scheduler to an action field
+There is a fucntion to prioritize actions, so two contradicting calls from different modules can be handled.

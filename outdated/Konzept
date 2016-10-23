@@ -1,0 +1,20 @@
+Garden Controll Projekt
+
+Beschreibung:
+Bereitstellung eines Open Source Werkzeugkastens für die Steuerung von Gartenanwendungen, aufgeteilt in Module verbunden über Wifi.
+
+Die Module
+1.Zeitschalter
+Schaltet Relais nach Einstellung
+2.Ebbe Flut Controller
+3.Flip Flop Switch
+
+
+
+Sensormodule:
+1.Temperatursensor
+2.Luftfeuchtigkeitssensor
+3.ph Sensor
+4.ec Sensor
+5.Wassersensor
+6.Füllstandssensor
