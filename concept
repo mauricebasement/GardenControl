@@ -13,19 +13,26 @@ There is an interface between the GUI and the modules, so that an other GUI can 
 Like this it can serve as a perfect framework for more complex GUIs which allow less user interaction, and therefor require less knowledge
 (eg. air temperature and humidity management is automated according to profile).
 Modules have different action fields, while sensor and timers have output fields. An action field can serve as an output field as well, to initiate actions depending on
-the state of another module. The possibility to create a tool, which is able to generate and read profiles for specific plants, a specific setup needs to be choosen,
+the state of another module. As well there is a function to prioritize different calls to action, so conflicts can be avoided.
+The possibility to create a tool, which is able to generate and read profiles for specific plants, a specific setup needs to be choosen,
 so that repeatability is given. This means, that modules have to be set up the same way every time, and should be done in a second step,
 after completion of the framework.
 
+The hardware design is based on the D1 Mini of Wemos, which contains an ESP Wifi module. A module typically consists of a D1 Mini, and additional hardware specific to its function.
+A power module provides DC power (5V), each module contains an input, as well as a power output, which allows to daisy chain different modules. Adapters to multiply power connections can help to improve usability.
+The modules are listed down below, the folder modules contains a detailed description of each module.
+
 The Modules:
-0.Scheduler Module
+1.Power Module: AC 110/220 in, DC 5V out
+2.Scheduler Module
 	-Specific Time: every time this time is reached, action is started
 	-Repeat Schduler: can be set to an interval to repeat action
 	-Light Scheduler: easy drag and drop of bars: two outputs for actions
-1.Switch: switches a relay
-2.Ebb Flood Controller: controlls ebb-flood table
-3.Flip Flop Switch: to use one ballast, for two bulbs
-4.Valve Module: solenoid valve that is switched according to schedule or events
+3.Switch: switches a relay
+4.Ebb Flood Controller: controlls ebb-flood table
+5.Flip Flop Switch: to use one ballast, for two bulbs
+6.Valve Module: solenoid valve that is switched according to schedule or events
+
 
 The Sensormodules:
 1.Temperaturesensor
@@ -34,6 +41,7 @@ The Sensormodules:
 4.ec Sensor
 5.Water Sensor
 6.Level Sensor
+7.Soil Moisure Sensor
 
 List of Connections/Actions for Modules:
 1.IF: for sensors an IF condiction can be configured
