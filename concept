@@ -22,6 +22,10 @@ The hardware design is based on the D1 Mini of Wemos, which contains an ESP Wifi
 A power module provides DC power (5V), each module contains an input, as well as a power output, which allows to daisy chain different modules. Adapters to multiply power connections can help to improve usability.
 The modules are listed down below, the folder modules contains a detailed description of each module.
 
+CrowdSourcing:
+http://www.dummies.com/business/start-a-business/crowdsourcing-for-dummies-cheat-sheet/
+Corwdsourcing can help us to get work done, especially for areas we are not skilled enough for.
+
 The Modules:
 1.Power Module: AC 110/220 in, DC 5V out
 2.Scheduler Module
@@ -32,7 +36,6 @@ The Modules:
 4.Ebb Flood Controller: controlls ebb-flood table
 5.Flip Flop Switch: to use one ballast, for two bulbs
 6.Valve Module: solenoid valve that is switched according to schedule or events
-
 
 The Sensormodules:
 1.Temperaturesensor
