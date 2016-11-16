@@ -39,41 +39,54 @@ _I will attempt to illustrate the devices I currently have_
 
 ```json
 {
-    "device": 'UUID',
-    "class": [ 'passive'],
-    "type": 'sensor',
+    "device": "UUID",
+    "class": [ "passive"],
+    "type": "sensor",
     "metric": [
                 {
-                    "name": 'Temperature',
-                    "units": ['Celsius', 'Fahrenheit'],
+                    "name": "Temperature",
+                    "units": ["Celsius", "Fahrenheit"],
                     "range": { "lower": -55,
                             "upper": 85
                         }
                 },
                 {
-                    "name": 'Humidity',
-                    "units" [ 'percent'],
-                    "range" { "lower": 0,
+                    "name": "Humidity",
+                    "units": [ "percent"],
+                    "range": { "lower": 0,
                               "upper": 100
                           }
                 }
             ],
-    "name": 'dht22',
-    "RESTaccess": { 'read':
+    "name": "dht22",
+    "RESTaccess": {
+        "read":
         [
             {
-                "protocol": 'http',
-                "method": 'get',
-                "resource" '/devices/uuid/'
+                "protocol": "http",
+                "method": "get",
+                "resource": "/devices/uuid/"
             },
             {
-                "protocol": 'mqtt',
-                "method": 'pub',
-                "resource": ''/devices/uuid/cmd'
+                "protocol": "mqtt",
+                "method": "pub",
+                "resource": "/devices/uuid/read"
             }
         ],
-        "returns": this.metric
-    }
+        "write": [
+            {
+                "protocol": "http",
+                "method": "post",
+                "resource": "/devices/uuid/"
+            },
+            {
+                "protocol": "mqtt",
+                "method": "pub",
+                "resource": "/devices/uuid/write"
+            }
+        ]
+    },
+    "pinKey": "P9_15"
 }
 ```
 
