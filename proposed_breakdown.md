@@ -36,8 +36,10 @@ Devices need to provide a "driver" method - some form of access including: RESTf
 Devices that require arguments must provide error checking, range checking, etc. This write method should also be described (e.g. POST module.local/devices/xxxx/state body: {state: 0} ).
 
 _I will attempt to illustrate the devices I currently have_
+
+```json
 {
-    "device": "UUID",
+    "device": 'UUID',
     "class": [ 'passive'],
     "type": 'sensor',
     "metric": [
@@ -55,25 +57,25 @@ _I will attempt to illustrate the devices I currently have_
                               "upper": 100
                           }
                 }
-            ]
+            ],
     "name": 'dht22',
-    "RESTaccess": { "read": [
-                                {
-                                    "protocol": 'http',
-                                    "method": 'get',
-                                    "resource" '/devices/uuid/'
-                                },
-                                {
-                                    "protocol": 'mqtt',
-                                    "method": 'pub',
-                                    "resource": /devices/uuid/cmd
-                                }
-                            ],
-                    "returns": this.metric
-                },
-
-
+    "RESTaccess": { 'read':
+        [
+            {
+                "protocol": 'http',
+                "method": 'get',
+                "resource" '/devices/uuid/'
+            },
+            {
+                "protocol": 'mqtt',
+                "method": 'pub',
+                "resource": ''/devices/uuid/cmd'
+            }
+        ],
+        "returns": this.metric
+    }
 }
+```
 
 Devices, or Modules (collections of devices), will be defined, monitored and updated, so that it will store a full definition of the entire system - including remote modules, storage locations (historical and analytical may be elsewhere), users, logical locations for module groupings, schedules, and recent state histories.
 
