@@ -1,4 +1,4 @@
-# proposed breakdown:
+# proposed breakdown: _DRAFT_
 
 ## introduction
 the system is made up of a horizontal-hierarchy. That is, there is main controller, the Brain, and / or 1 or more modules. Each module is able to function on it's own, such that the main controller is essentially a module as well. Each module contains devices (can, may not, doesn't have to), and has varying degrees of autonomy; that is, it may or may not have a clock source, it may or may not provide some functions available from the Brain. Each module should be network-able (ideally with wi-fi), or Bluetooth LE enabled. Serial Port connections should also be possible. All data between modules should be transported in JSON. It is up to the module implementer to handle JSON data structures.
