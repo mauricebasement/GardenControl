@@ -1,20 +1,94 @@
-# proposed breakdown:
+# proposed breakdown: _DRAFT_
 
 ## introduction
 the system is made up of a horizontal-hierarchy. That is, there is main controller, the Brain, and / or 1 or more modules. Each module is able to function on it's own, such that the main controller is essentially a module as well. Each module contains devices (can, may not, doesn't have to), and has varying degrees of autonomy; that is, it may or may not have a clock source, it may or may not provide some functions available from the Brain. Each module should be network-able (ideally with wi-fi), or Bluetooth LE enabled. Serial Port connections should also be possible. All data between modules should be transported in JSON. It is up to the module implementer to handle JSON data structures.
 
 The module should be able to register itself with the Brain, and pending user controlled approval, the Brain will assume configuration and management tasks for the module, so that the user has one entry point into the larger system. Individual modules not registered with the Brain must implement their own configuration interface, while maintaining configuration and management compatibility with the brain.
 
-## Controler (brain)
+## Controller (brain)
 
 ### General Information
 The Brain provides 3 primary functions (2 of which are optional). They consist of:
+### General Information
+The Brain provides 3 primary functions (2 of which are optional). They consist of:
 * Configuration & Management
+  * 2 layers/sides(?) - module level, with physical devices contained, and logical level, with real-world location representation.
+  * some form of schedule representation
 * Resource Monitoring & Automated Response
+  * association with module or logical level devices, containers, etc.
+  * active components should be able to have triggers for event conditions.
 * Historical data store and analysis
+  * InfluxDB looks ideal.
+  * multiple tags appear to be pretty handy (dev id, location, parent module, etc.)
+  * interesting downsampling options, and possibly easy to insert into D3 structures.
 
 #### Configuration & Management
 The Brain proposes to manage a set of devices locally, or remotely. It will have a time source (NTP, Radio Clock, Settable RTC), and network access.
+The brain should be a central management point for a collection of hardware modules. This includes, but is not limited to, event scheduling, a network management API consisting of a access methods and management based on the class of hardware module, robust error detection and notification, definable active responses for definable event conditions, [and more].
+
+The primary difficulty seems to be the (for me, at least), the device definition, physical access, and access API.
+
+Devices need to be uniquely identifiable, both physically, and logically.
+Devices need to be portable.
+Device capabilities need to be represented.
+Devices need to describe each unit or metric they provide.
+Devices need to provide a "driver" method - some form of access including: RESTful resource access, language specific drivers, external binary drivers, etc.
+Devices that require arguments must provide error checking, range checking, etc. This write method should also be described (e.g. POST module.local/devices/xxxx/state body: {state: 0} ).
+
+_I will attempt to illustrate the devices I currently have_
+
+```json
+{
+    "device": "UUID",
+    "class": [ "passive"],
+    "type": "sensor",
+    "metric": [
+                {
+                    "name": "Temperature",
+                    "units": ["Celsius", "Fahrenheit"],
+                    "range": { "lower": -55,
+                            "upper": 85
+                        }
+                },
+                {
+                    "name": "Humidity",
+                    "units": [ "percent"],
+                    "range": { "lower": 0,
+                              "upper": 100
+                          }
+                }
+            ],
+    "name": "dht22",
+    "RESTaccess": {
+        "read":
+        [
+            {
+                "protocol": "http",
+                "method": "get",
+                "resource": "/devices/uuid/"
+            },
+            {
+                "protocol": "mqtt",
+                "method": "pub",
+                "resource": "/devices/uuid/read"
+            }
+        ],
+        "write": [
+            {
+                "protocol": "http",
+                "method": "post",
+                "resource": "/devices/uuid/"
+            },
+            {
+                "protocol": "mqtt",
+                "method": "pub",
+                "resource": "/devices/uuid/write"
+            }
+        ]
+    },
+    "pinKey": "P9_15"
+}
+```
 
 Devices, or Modules (collections of devices), will be defined, monitored and updated, so that it will store a full definition of the entire system - including remote modules, storage locations (historical and analytical may be elsewhere), users, logical locations for module groupings, schedules, and recent state histories.
 
@@ -34,7 +108,7 @@ Automated Response should define:
 * response (external program execution like sending mail, sms; internal work with other resources)
 
 #### Historical data store and analysis
-InfluxDB provides time series, mongoDB, couchDB, others provide NoSQL JSON stores. It should also be possible to use [RRDtool](http://oss.oetiker.ch/rrdtool/), however it's power lies in charting, and I've not explored it's query capabilities. 
+InfluxDB provides time series, mongoDB, couchDB, others provide NoSQL JSON stores. It should also be possible to use [RRDtool](http://oss.oetiker.ch/rrdtool/), however it's power lies in charting, and I've not explored it's query capabilities.
 
 Visualization may be done with [D3.js](http://d3js.org), [chartist.js](https://gionkunz.github.io/chartist-js/), or others.
 
@@ -100,7 +174,7 @@ Should Haves:
 
 Example: to get the status of a relay (on or off) from a module, you could use the following, `curl -X GET -H "Content-Type: application/json" http://module/devices/:dev_UUID:` where dev_UUID is a 64bit string identifying the particular device. It should return something like:
 ```javascript
-{ 
+{
     _id: "2bb91460881b7d5a98418060b0006d66",
     name: "Electrical Outlet 1",
     state: "on",
