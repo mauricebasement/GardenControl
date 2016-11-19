@@ -40,6 +40,10 @@ The primary difficulty seems to be the (for me, at least), the device definition
 
 Devices need to be uniquely identifiable, both physically, and logically. Devices need to be portable. Device capabilities need to be represented. Devices need to describe each unit or metric they provide. Devices need to provide a "driver" method - some form of access including: RESTful resource access, language specific drivers, external binary drivers, etc. Devices that require arguments must provide error checking, range checking, etc. This write method should also be described (e.g. POST module.local/devices/xxxx/state body: {state: 0} ).
 
+_Update - 19.NOV.2016: lots of work on this, but kind of from the wrong direction. No worries, it's not a waste. Based on the conversation w/ Moritz and Addi, rather than trying to define the Data Model, the APIs should be defined, and out of them, the model should be "generated". To that end, I'll be inserting API definitions below._
+
+
+
 _I will attempt to illustrate the devices I currently have_
 
 ```json
