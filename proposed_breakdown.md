@@ -22,7 +22,7 @@ The inner circle / Brain is responsible for infrastructure, resource handling (r
 
 The theme, or app, or functional usage, or whatever is wrapped around the brain, is the part where the work of the particular function at hand is done. That is to say, a network of modules controlling a small factory needs only to model condition - response chanins, or provide a realtime user interface to the brain, or a simple sequential operation, or a mix of all of these and more.
 
-_note that at some point, there will need to be some kind of 'administrator' interface to the brain, to manage its internals. There's no reason why an app/theme (i like the term theme, because you're simply applying a garden theme, or a water managemnt theme, or a weather prediction theme, or a smart house theme, etc.)
+_note that at some point, there will need to be some kind of 'administrator' interface to the brain, to manage its internals. There's no reason why an app/theme (i like the term theme, because you're simply applying a garden theme, or a water managemnt theme, or a weather prediction theme, or a smart house theme, etc.)_
 
 To the extent that there will be (likely) multiple brains, each will have a view of the available resources from their own perspective. There's also no reason that a module can't have multiple brains at once, provided it has the computing power required. In the case of more than one brain within a particular "theme", the theme should be able to choose a "primary interface" to them. That is to say, access to "http://garden.local" will be managed by the theme (in this case, probably a garden theme), and it will choose which brain to access devices through. It's also possible that a theme might work directly several brains.
 
