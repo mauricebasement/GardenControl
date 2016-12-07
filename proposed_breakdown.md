@@ -6,11 +6,82 @@ the system is made up of a horizontal-hierarchy. That is, there is main controll
 
 The module should be able to register itself with the Brain, and pending user controlled approval, the Brain will assume configuration and management tasks for the module, so that the user has one entry point into the larger system. Individual modules not registered with the Brain must implement their own configuration interface, while maintaining configuration and management compatibility with the brain.
 
+_Update - 19.NOV.2016: lots of work on this, but kind of from the wrong direction. No worries, it's not a waste. Based on the conversation w/ Moritz and Addi, rather than trying to define the Data Model, the APIs should be defined, and out of them, the model should be "generated". To that end, I'll be inserting API definitions below._
+
+I'll describe the features as functional definitions, in the hopes of fleshing out an API that is consistent, resulting in a complete object model with view interfaces defined. Additionally, I'll be looking to incorporate peer networks into the thought base. Some additional infrastructure, such as 'made safe' [note to research this more], with encryption and more, will also be part of the final draft.
+
+Below, I've tried to represent a model of devices, objects, etc. I think they provide an appropriate direction, but shouldn't be considered limited to this, by any means. I will be inserting functional - pseudo api - descriptions, which, cumulatively should result in something similar to the objects described below.
+
+Upon re-reading, I'm kind of going in that direction already... _this is just a note to myself_ ...as this is a fluid doc, i'll just move into that direction, more explicitly.
+
+_Update - 7.DEC.2016: After much thought and some deeper conceptual understanding of js and the idea of abstracting the network layer, I've finally settled on a reasonable, very high-level (meaning 'not detailed'), strategy. This should probably be at the top._
+
+To just blurt it out, I propose the basis be a core component consisting of devices and modules with devices, each implementation having an event handler providing hooks for realtime updates. This provides a single view of all resources. This also provides portability among the horozontal heirarchy of resource participants. Each host capable, can store a personal view of the model. If you visualize a small circle as the "brain" of the module, with each of the devices (local and remote) as chunks of pie outside the innercircle, being orchestrated via the inner circle. Additionally, the inner circle provides a standard interface to access the devices. A 3rd ring of the circle is essentially the theme, or app, or 'functional usage of the devices', which can create various operational rulesets, or provide realtime read/write access. This ring can be thought of as existing at z offset so that one can see it's direct communication with the "brain" (or, kernel if you like).
+
+The inner circle / Brain is responsible for infrastructure, resource handling (registration, validation, exposure), etc.
+
+The theme, or app, or functional usage, or whatever is wrapped around the brain, is the part where the work of the particular function at hand is done. That is to say, a network of modules controlling a small factory needs only to model condition - response chanins, or provide a realtime user interface to the brain, or a simple sequential operation, or a mix of all of these and more.
+
+_note that at some point, there will need to be some kind of 'administrator' interface to the brain, to manage its internals. There's no reason why an app/theme (i like the term theme, because you're simply applying a garden theme, or a water managemnt theme, or a weather prediction theme, or a smart house theme, etc.)_
+
+To the extent that there will be (likely) multiple brains, each will have a view of the available resources from their own perspective. There's also no reason that a module can't have multiple brains at once, provided it has the computing power required. In the case of more than one brain within a particular "theme", the theme should be able to choose a "primary interface" to them. That is to say, access to "http://garden.local" will be managed by the theme (in this case, probably a garden theme), and it will choose which brain to access devices through. It's also possible that a theme might work directly several brains.
+
+quick use case for illustrative purposes:
+
+A module might have several temp/rh sensors, a light sensor, power sensors, as well as several PWM channels, a digital gyroscope & accelerometer, a GPS module, along with a digital signal processor with an audio-jack in/out. This is a perfectly reasonable assembly of a Raspberry Pi, CHIP, Beaglebone Black or other SoC type linux system. This particular module might have 2 brains, divided into functional containers. One brain might provide every thing needed for a weather station, garden managment or smart home, while the other brain manages everything needed for an exotic comms link. Or, it could be simply one brain with 2 themes.
+
+Themes are essentially the workers making use of the resources. They define the work flow, they provide the desired input and, if required, the desired user output. They essentially listen for the events comming out of the brain (or brains),
+
+## Functional descriptions _which may lead to an API, hopefully_
+
+Each piece below should grow to be a series of full descriptions. It can be thought of as a tree structure.
+
+- configuration
+
+  - module registration
+  - device registration
+
+    - access methods/ _protocol_ (tbd) descriptions, definitions
+
+      - http (protocol)
+
+        - some kind of reliable client api descriptor (for varying "smart"-ness of devices)
+
+      - mqtt (protocol)
+
+        - ideally broadcast data
+        - topics to be published on
+        - _NEEDS WORK -> need to naildown mqtt usage_
+
+    - access control lists (?) [e.g. roles( scheduler | operator | object to object access| network access | historical data access | etc ) ]
+
+  - logical container associations defined
+
+    - spaces, locations, areas defined
+
+      - devices || modules assigned
+
+  - themes (?)
+  - possibly other elements for use in other functionality...(?)
+  - potentially schedule definitions
+
+- management
+- Monitoring
+
+  - configuration
+
+    - conditions of varying complexity
+    - severity definitions
+    - logical groupings
+    - chaining conditions
+
+  - enable/disable individually or in groupings
+  -
+
+- Pre-defined responses
+- operation
+
 ## Controller (brain)
-
-### General Information
-
-The Brain provides 3 primary functions (2 of which are optional). They consist of:
 
 ### General Information
 
