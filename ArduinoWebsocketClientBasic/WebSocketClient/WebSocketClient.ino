@@ -55,18 +55,7 @@ void setup() {
     return;
   }
 
-  // Parse String and Setup Pinmodes 
-  for (int i = 0; json["array"][i]["uid"] != ""; i++) {
-     for(int j = 0; json["array"][i]["api"][j] != ""; j++) {
-      if(json["array"][i]["api"]["bus"] == "gpio") {
-        int pin = json["array"][i]["api"]["pin"];
-        char * pinmode = json["array"][i]["api"]["pin"];
-        pinMode(pin, pinmode);
-        
-      }
-     }
-  }
-
+  
       for(uint8_t t = 4; t > 0; t--) {
           if(SERIAL_DEBUG)USE_SERIAL.printf("[SETUP] BOOT WAIT %d...\n", t);
           if(SERIAL_DEBUG)USE_SERIAL.flush();
@@ -86,6 +75,30 @@ void setup() {
     webSocket.onEvent(webSocketEvent);
 
     webSocket.sendTXT("I am a D1 mini, my ID is:id1"); //Let Flow know about board type and uid
+
+    // Parse String and Setup Pinmodes 
+  //for (int i = 0; json["array"][i]["uid"] != ""; i++) {
+     //for(int j = 0; json["array"][i]["api"][j] != ""; j++) {
+    String bus = json["array"][0]["api"]["bus"];
+    USE_SERIAL.println(bus);
+      if(bus.equals("gpio")) {
+        int pin = json["array"][0]["api"]["pin"];
+        USE_SERIAL.println(pin);
+        //String pinmode = json["array"][i]["api"]["pin"];
+        
+        /*if (pinmode == "OUTPUT") {
+          pinMode(pin, OUTPUT);
+          USE_SERIAL.println(pinmode);
+        }
+        if (pinmode == "INPUT") {
+          pinMode(pin, INPUT);
+          USE_SERIAL.println(pinmode);
+        }*/
+        
+    //  }
+     }
+  //}
+
 
 }
 
