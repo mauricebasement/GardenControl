@@ -1,0 +1,66 @@
+{ "array" :[
+   {
+       "uid": "1",
+       "type": "<http://vocab.peePonic.com/waterPump>",
+       "api": [
+           {
+               "name": "on",
+               "bus": "gpio",
+               "pin": 4,
+               "direction": "out",
+               "value": 1
+           },
+           {
+               "name": "off",
+               "bus": "gpio",
+               "pin": 4,
+               "direction": "out",
+               "value": 0
+           }
+       ]
+   },
+
+   {
+       "uid": "2",
+       "type": "<http://vocab.peePonic.com/waterPump>",
+       "api": [
+           {
+               "name": "on",
+               "bus": "gpio",
+               "pin": 4,
+               "direction": "out",
+               "value": 1
+           },
+           {
+               "name": "off",
+               "bus": "gpio",
+               "pin": 4,
+               "direction": "out",
+               "value": 0
+           }
+       ]
+   },
+
+   {
+       "uid": "3",
+       "type": "<http://vocab.peePonic.com/airPump>",
+       "api": [
+           {
+               "name": "none"
+           }
+       ]
+   },
+
+   {
+       "uid": "4",
+       "type": "<http://vocab.peePonic.com/waterSensor>",
+       "api": [
+           {
+               "name": "get",
+               "bus": "gpio",
+               "pin": "A0"
+           }
+       ]
+   }
+]
+}
